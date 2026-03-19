@@ -25,11 +25,23 @@ export function App() {
 
         <div className={styles.calculatorButtonsPanel}>
           <div className={styles.numberButtonContainer}>
-            {NUMS.map((num) =>
+            {NUMS.map((num, index) =>
               num === "0" ? (
-                <button className={styles.button}>{num}</button>
+                <button
+                  key={index}
+                  className={styles.button}
+                  onClick={() => console.log(num)}
+                >
+                  {num}
+                </button>
               ) : (
-                <button className={styles.button}>{num}</button>
+                <button
+                  key={index}
+                  className={styles.button}
+                  onClick={() => console.log(num)}
+                >
+                  {num}
+                </button>
               ),
             )}
           </div>
