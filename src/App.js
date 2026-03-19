@@ -11,6 +11,14 @@ export function App() {
   const [hasResult, setHasResult] = useState(false);
 
   function hendlyNumberClick(num) {
+    if (hasResult) {
+      setOperand1(num);
+      setOperand2("");
+      setOperator("");
+      setDisplayValue(num);
+      setHasResult(false);
+      return;
+    }
     if (operator === "") {
       setHasResult(false);
       const newOperand1 = operand1 + num;
