@@ -1,5 +1,4 @@
 import styles from "./App.module.css";
-import ButtonRow from "./components/ButtonRow";
 
 export function App() {
   return (
@@ -10,11 +9,8 @@ export function App() {
           <input type="number" className={styles.displayInput}></input>
         </div>
         <div className={styles.calculatorButtonsPanel}>
-          <div className={styles.buttonFirstRow}>
-            <ButtonRow />
-            <ButtonRow />
-            <ButtonRow />
-            <ButtonRow />
+          <div>
+            <button className={styles.button}>1</button>
           </div>
         </div>
       </div>
