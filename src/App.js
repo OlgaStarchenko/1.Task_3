@@ -8,6 +8,53 @@ export function App() {
   const [operator, setOperator] = useState("");
   const [operand2, setOperand2] = useState("");
   const [displayValue, setDisplayValue] = useState("");
+  const [hasResult, setHasResult] = useState(false);
+
+  function hendlyNumberClick(num) {
+    if (operator === "") {
+      setHasResult(false);
+      const newOperand1 = operand1 + num;
+      setOperand1(newOperand1);
+      setDisplayValue(newOperand1);
+    } else {
+      const newOperand2 = operand2 + num;
+      setOperand2(newOperand2);
+      setDisplayValue(operand1 + operator + newOperand2);
+    }
+  }
+
+  function addPlusOperator() {
+    setOperator("+");
+    setDisplayValue((prev) => prev + "+");
+  }
+
+  function addMinusOperator() {
+    setOperator("-");
+    setDisplayValue((prev) => prev + "-");
+  }
+
+  function makeCalculations(operator) {
+    if (operator === "+") {
+      const sum = Number(operand1) + Number(operand2);
+      setDisplayValue(sum);
+    } else {
+      const difference = Number(operand1) - Number(operand2);
+      setDisplayValue(difference);
+    }
+
+    setHasResult(true);
+    setOperand1("");
+    setOperand2("");
+    setOperator("");
+  }
+
+  function resetValue() {
+    setOperand1("");
+    setOperand2("");
+    setOperator("");
+    setDisplayValue("");
+    setHasResult(false);
+  }
 
   return (
     <div className={styles.container}>
@@ -18,7 +65,9 @@ export function App() {
           <input
             type="text"
             readOnly
-            className={styles.displayInput}
+            className={`
+				${styles.displayInput}
+				${hasResult ? styles.displayInputResult : ""}`}
             value={displayValue === "" ? "0" : displayValue}
           ></input>
         </div>
@@ -30,7 +79,7 @@ export function App() {
                 <button
                   key={index}
                   className={styles.button}
-                  onClick={() => console.log(num)}
+                  onClick={() => hendlyNumberClick(num)}
                 >
                   {num}
                 </button>
@@ -38,7 +87,7 @@ export function App() {
                 <button
                   key={index}
                   className={styles.button}
-                  onClick={() => console.log(num)}
+                  onClick={() => hendlyNumberClick(num)}
                 >
                   {num}
                 </button>
@@ -47,10 +96,21 @@ export function App() {
           </div>
 
           <div className={styles.actionButtonContainer}>
-            <button className={styles.resetButton}>C</button>
-            <button className={styles.button}>+</button>
-            <button className={styles.button}>-</button>
-            <button className={styles.button}>=</button>
+            <button className={styles.resetButton} onClick={resetValue}>
+              C
+            </button>
+            <button className={styles.button} onClick={addPlusOperator}>
+              +
+            </button>
+            <button className={styles.button} onClick={addMinusOperator}>
+              -
+            </button>
+            <button
+              className={styles.button}
+              onClick={() => makeCalculations(operator)}
+            >
+              =
+            </button>
           </div>
         </div>
       </div>

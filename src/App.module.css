@@ -45,6 +45,10 @@ h1 {
   padding: 0 10px;
 }
 
+.displayInputResult {
+  color: rgb(9, 118, 9);
+}
+
 .calculatorButtonsPanel {
   display: flex;
   align-items: center;
