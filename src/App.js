@@ -74,25 +74,15 @@ export function App() {
 
         <div className={styles.calculatorButtonsPanel}>
           <div className={styles.numberButtonContainer}>
-            {NUMS.map((num, index) =>
-              num === "0" ? (
-                <button
-                  key={index}
-                  className={styles.button}
-                  onClick={() => hendlyNumberClick(num)}
-                >
-                  {num}
-                </button>
-              ) : (
-                <button
-                  key={index}
-                  className={styles.button}
-                  onClick={() => hendlyNumberClick(num)}
-                >
-                  {num}
-                </button>
-              ),
-            )}
+            {NUMS.map((num, index) => (
+              <button
+                key={index}
+                className={`${styles.button}  ${num === "0" ? styles.zeroButton : ""} `}
+                onClick={() => hendlyNumberClick(num)}
+              >
+                {num}
+              </button>
+            ))}
           </div>
 
           <div className={styles.actionButtonContainer}>

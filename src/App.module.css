@@ -76,6 +76,10 @@ h1 {
   border: 1px solid rgb(84, 81, 81);
 }
 
+.zeroButton {
+  grid-column: 1 / -1;
+}
+
 .actionButtonContainer {
   display: flex;
   flex-direction: column;
