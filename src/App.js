@@ -32,11 +32,35 @@ export function App() {
   }
 
   function addPlusOperator() {
+    if (operand1 === "") return;
+    if (operator !== "" && operand2 === "") {
+      setOperator("+");
+      setDisplayValue(operand1 + "+");
+      return;
+    }
+    if (operand2 !== "") {
+      let result;
+      if (operator === "+") {
+        result = Number(operand1) + Number(operand2);
+      } else {
+        result = Number(operand1) - Number(operand2);
+      }
+
+      setOperand1(String(result));
+      setOperand2("");
+      setOperator("+");
+      setDisplayValue(result + "+");
+      return;
+    }
     setOperator("+");
-    setDisplayValue((prev) => prev + "+");
+    setDisplayValue(operand1 + "+");
+    return;
   }
 
   function addMinusOperator() {
+    if (operator === "-") {
+      return;
+    }
     setOperator("-");
     setDisplayValue((prev) => prev + "-");
   }
