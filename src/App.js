@@ -58,11 +58,29 @@ export function App() {
   }
 
   function addMinusOperator() {
-    if (operator === "-") {
+    if (operand1 === "") return;
+
+    if (operator !== "" && operand2 === "") {
+      setOperator("-");
+      setDisplayValue(operand1 + "-");
+      return;
+    }
+
+    if (operand2 !== "") {
+      let result;
+      if (operator === "+") {
+        result = Number(operand1) + Number(operand2);
+      } else if (operator === "-") {
+        result = Number(operand1) - Number(operand2);
+      }
+      setOperand1(result);
+      setOperator("-");
+      setOperand2("");
+      setDisplayValue(result + "-");
       return;
     }
     setOperator("-");
-    setDisplayValue((prev) => prev + "-");
+    setDisplayValue(operand1 + "-");
   }
 
   function makeCalculations(operator) {
