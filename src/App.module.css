@@ -58,7 +58,7 @@ h1 {
 
 .numberButtonContainer {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, auto);
 }
 
@@ -74,15 +74,6 @@ h1 {
   padding: 5px;
   border-radius: 5px;
   border: 1px solid rgb(84, 81, 81);
-}
-
-.zeroButton {
-  grid-column: 1 / -1;
-}
-
-.actionButtonContainer {
-  display: flex;
-  flex-direction: column;
 }
 
 .resetButton {

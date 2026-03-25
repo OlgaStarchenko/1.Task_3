@@ -2,7 +2,22 @@ import { useState } from "react";
 import styles from "./App.module.css";
 
 export function App() {
-  const NUMS = ["9", "8", "7", "6", "5", "4", "3", "2", "1", "0"];
+  const BUTTONS = [
+    "9",
+    "8",
+    "7",
+    "C",
+    "6",
+    "5",
+    "4",
+    "+",
+    "3",
+    "2",
+    "1",
+    "-",
+    "0",
+    "=",
+  ];
 
   const [operand1, setOperand1] = useState("");
   const [operator, setOperator] = useState("");
@@ -83,7 +98,7 @@ export function App() {
     setDisplayValue(operand1 + "-");
   }
 
-  function makeCalculations(operator) {
+  function makeCalculations() {
     if (operator === "+") {
       const sum = Number(operand1) + Number(operand2);
       setDisplayValue(sum);
@@ -106,6 +121,20 @@ export function App() {
     setHasResult(false);
   }
 
+  function assignOnClickToButtons(buttonName) {
+    if (buttonName === "C") {
+      return resetValue();
+    } else if (buttonName === "+") {
+      return addPlusOperator();
+    } else if (buttonName === "-") {
+      return addMinusOperator();
+    } else if (buttonName === "=") {
+      return makeCalculations();
+    } else {
+      return hendlyNumberClick(buttonName);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.calculator}>
@@ -124,33 +153,15 @@ export function App() {
 
         <div className={styles.calculatorButtonsPanel}>
           <div className={styles.numberButtonContainer}>
-            {NUMS.map((num, index) => (
+            {BUTTONS.map((num, index) => (
               <button
                 key={index}
-                className={`${styles.button}  ${num === "0" ? styles.zeroButton : ""} `}
-                onClick={() => hendlyNumberClick(num)}
+                className={`${styles.button}  ${num === "C" ? styles.resetButton : ""} `}
+                onClick={() => assignOnClickToButtons(num)}
               >
                 {num}
               </button>
             ))}
-          </div>
-
-          <div className={styles.actionButtonContainer}>
-            <button className={styles.resetButton} onClick={resetValue}>
-              C
-            </button>
-            <button className={styles.button} onClick={addPlusOperator}>
-              +
-            </button>
-            <button className={styles.button} onClick={addMinusOperator}>
-              -
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => makeCalculations(operator)}
-            >
-              =
-            </button>
           </div>
         </div>
       </div>
