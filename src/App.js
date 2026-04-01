@@ -1,31 +1,31 @@
 import { useState } from "react";
 import styles from "./App.module.css";
 
-export function App() {
-  const BUTTONS = [
-    "9",
-    "8",
-    "7",
-    "C",
-    "6",
-    "5",
-    "4",
-    "+",
-    "3",
-    "2",
-    "1",
-    "-",
-    "0",
-    "=",
-  ];
+const BUTTONS = [
+  "9",
+  "8",
+  "7",
+  "C",
+  "6",
+  "5",
+  "4",
+  "+",
+  "3",
+  "2",
+  "1",
+  "-",
+  "0",
+  "=",
+];
 
+export function App() {
   const [operand1, setOperand1] = useState("");
   const [operator, setOperator] = useState("");
   const [operand2, setOperand2] = useState("");
   const [displayValue, setDisplayValue] = useState("");
   const [hasResult, setHasResult] = useState(false);
 
-  function hendlyNumberClick(num) {
+  function handleNumberClick(num) {
     if (hasResult) {
       setOperand1(num);
       setOperand2("");
@@ -46,71 +46,44 @@ export function App() {
     }
   }
 
-  function addPlusOperator() {
+  function handleOperator(nextOperator) {
     if (operand1 === "") return;
     if (operator !== "" && operand2 === "") {
-      setOperator("+");
-      setDisplayValue(operand1 + "+");
+      setOperator(nextOperator);
+      setDisplayValue(operand1 + nextOperator);
+      return;
+    }
+    if (operand1 !== "" && operator === "") {
+      setOperator(nextOperator);
+      setDisplayValue(operand1 + nextOperator);
       return;
     }
     if (operand2 !== "") {
-      let result;
-      if (operator === "+") {
-        result = Number(operand1) + Number(operand2);
-      } else {
-        result = Number(operand1) - Number(operand2);
-      }
-
-      setOperand1(String(result));
-      setOperand2("");
-      setOperator("+");
-      setDisplayValue(result + "+");
-      return;
-    }
-    setOperator("+");
-    setDisplayValue(operand1 + "+");
-    return;
-  }
-
-  function addMinusOperator() {
-    if (operand1 === "") return;
-
-    if (operator !== "" && operand2 === "") {
-      setOperator("-");
-      setDisplayValue(operand1 + "-");
-      return;
-    }
-
-    if (operand2 !== "") {
-      let result;
-      if (operator === "+") {
-        result = Number(operand1) + Number(operand2);
-      } else if (operator === "-") {
-        result = Number(operand1) - Number(operand2);
-      }
+      const result = makeCalculations();
       setOperand1(result);
-      setOperator("-");
       setOperand2("");
-      setDisplayValue(result + "-");
-      return;
+      setOperator(nextOperator);
+      setDisplayValue(result + nextOperator);
+      setHasResult(false);
     }
-    setOperator("-");
-    setDisplayValue(operand1 + "-");
   }
 
   function makeCalculations() {
+    let result = "";
     if (operator === "+") {
-      const sum = Number(operand1) + Number(operand2);
-      setDisplayValue(sum);
+      result = String(Number(operand1) + Number(operand2));
+      setDisplayValue(result);
     } else {
-      const difference = Number(operand1) - Number(operand2);
-      setDisplayValue(difference);
+      result = String(Number(operand1) - Number(operand2));
+      setDisplayValue(result);
     }
 
     setHasResult(true);
     setOperand1("");
     setOperand2("");
     setOperator("");
+
+    return result;
   }
 
   function resetValue() {
@@ -125,13 +98,13 @@ export function App() {
     if (buttonName === "C") {
       return resetValue();
     } else if (buttonName === "+") {
-      return addPlusOperator();
+      return handleOperator("+");
     } else if (buttonName === "-") {
-      return addMinusOperator();
+      return handleOperator("-");
     } else if (buttonName === "=") {
       return makeCalculations();
     } else {
-      return hendlyNumberClick(buttonName);
+      return handleNumberClick(buttonName);
     }
   }
 
